@@ -181,3 +181,9 @@ list.c:22:8: note: declared here
         ^~~~~~~~~~
 Compilation failed
 2cb4f1c
+Fri, Mar 28, 2025  4:33:28 PM: 
+ list.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+ tests:  11|1
+total_score: 55/70
+493eadd
