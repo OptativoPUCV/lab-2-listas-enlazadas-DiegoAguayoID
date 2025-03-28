@@ -66,25 +66,24 @@ void * prevList(List * list) {
 }
 
 void pushFront(List * list, void * data) {
-    if (list == NULL) return;
+    if (list == NULL) return; // Verifica si la lista está inicializada
 
     Node * newNode = (Node *)malloc(sizeof(Node));
-    if (newNode == NULL) return;
+    if (newNode == NULL) return; // Verifica si se asignó memoria correctamente
 
-    newNode -> data = data;
-    newNode -> next = list -> head; 
-    newNode -> prev = NULL;
+    newNode->data = data;
+    newNode->next = list->head; // El nuevo nodo apunta a la antigua cabeza
+    newNode->prev = NULL;       // Como es el primero, no tiene nodo anterior
 
-    if (list -> head != NULL) {
-        list -> head -> prev = newNode;
+    if (list->head != NULL) {
+        list->head->prev = newNode; // El antiguo primer nodo ahora apunta atrás al nuevo nodo
     }
 
-    list->head = newNode; 
-    if (list -> tail == NULL) { 
+    list->head = newNode; // La cabeza de la lista ahora es el nuevo nodo
+
+    if (list->tail == NULL) { // Si la lista estaba vacía, también actualiza tail
         list->tail = newNode;
     }
-
-    list -> current = list -> head;
 }
 
 void pushBack(List * list, void * data) {
@@ -123,8 +122,6 @@ void pushCurrent(List * list, void * data) {
 
     list->current->prev = newNode;
 }
-
-
 
 void * popFront(List * list) {
     list->current = list->head;
