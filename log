@@ -164,3 +164,20 @@ Fri, Mar 28, 2025  4:24:22 PM:
  tests:  10|2
 total_score: 45/70
 f4fa148
+Fri, Mar 28, 2025  4:33:02 PM: 
+ list.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+In file included from test.c:5:0:
+list.c: In function 'pushCurrent':
+list.c:89:25: error: 'lista' undeclared (first use in this function)
+     if (list == NULL || lista -> current == NULL){
+                         ^~~~~
+list.c:89:25: note: each undeclared identifier is reported only once for each function it appears in
+list.c:93:23: error: too few arguments to function 'createNode'
+     Node *nuevoNodo = createNode() ;
+                       ^~~~~~~~~~
+list.c:22:8: note: declared here
+ Node * createNode(void * data) {
+        ^~~~~~~~~~
+Compilation failed
+2cb4f1c
