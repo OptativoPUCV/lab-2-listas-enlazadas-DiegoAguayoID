@@ -98,17 +98,27 @@ void pushCurrent(List * list, void * data) {
 
     newNode->data = data;
 
-    if (list->current == list->head) {
-        newNode->next = list->head;
-        newNode->prev = NULL;
+    if (list == NULL || list->current == NULL) return; // Verifica que la lista y current sean válidos
 
-        if (list->head != NULL) {
-            list->head->prev = newNode;
+    Node * newNode = (Node *)malloc(sizeof(Node));
+    if (newNode == NULL) return; // Verifica si la asignación de memoria fue exitosa
+
+    newNode->data = data;
+
+    // **Caso 1: current está en tail → actualizar tail**
+    if (list->current == list->tail) {
+        newNode->prev = list->tail;
+        newNode->next = NULL;
+
+        if (list->tail != NULL) {
+            list->tail->next = newNode;
         }
 
-        list->head = newNode; 
+        list->tail = newNode; // **Nuevo nodo es ahora el último**
+        return;
     }
 
+    // **Caso 2: current está en el medio o al inicio**
     newNode->next = list->current;
     newNode->prev = list->current->prev;
 
@@ -117,6 +127,11 @@ void pushCurrent(List * list, void * data) {
     }
 
     list->current->prev = newNode;
+
+    // **Caso especial: si current estaba en head, actualizar head**
+    if (list->current == list->head) {
+        list->head = newNode;
+    }
 }
 
 void * popFront(List * list) {
