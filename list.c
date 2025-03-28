@@ -91,15 +91,7 @@ void pushBack(List * list, void * data) {
 }
 
 void pushCurrent(List * list, void * data) {
-    if (list == NULL || list->current == NULL) return; 
-
-    Node * newNode = (Node *)malloc(sizeof(Node));
-    if (newNode == NULL) return;
-
-    newNode->data = data;
-
     if (list == NULL || list->current == NULL) return; // Verifica que la lista y current sean válidos
-
     Node * newNode = (Node *)malloc(sizeof(Node));
     if (newNode == NULL) return; // Verifica si la asignación de memoria fue exitosa
 
