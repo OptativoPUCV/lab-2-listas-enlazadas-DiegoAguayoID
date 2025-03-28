@@ -66,12 +66,30 @@ void * prevList(List * list) {
 }
 
 void pushFront(List * list, void * data) {
-    list -> current = list -> head ;
-    pushCurrent(list, data) ;
-    if (list -> current -> prev == NULL) {
-        list -> head = list -> current;
+    if (list == NULL) return; // Verifica si la lista está inicializada
+
+    // Crea un nuevo nodo
+    Node * newNode = (Node *)malloc(sizeof(Node));
+    if (newNode == NULL) return; // Verifica si se asignó memoria correctamente
+
+    newNode->data = data;
+    newNode->next = list->head; // El nuevo nodo apunta a la antigua cabeza
+    newNode->prev = NULL;       // Como es el primero, no tiene nodo anterior
+
+    if (list->head != NULL) {
+        list->head->prev = newNode; // El antiguo primer nodo ahora apunta atrás al nuevo nodo
     }
+
+    list->head = newNode; // La cabeza de la lista ahora es el nuevo nodo
+
+    if (list->tail == NULL) { // Si la lista estaba vacía, también actualiza tail
+        list->tail = newNode;
+    }
+
+    // Si necesitas que current también apunte al primer nodo
+    list->current = list->head;
 }
+
 
 void pushBack(List * list, void * data) {
     list->current = list->tail;
@@ -79,38 +97,6 @@ void pushBack(List * list, void * data) {
 }
 
 void pushCurrent(List * list, void * data) {
-    if (list == NULL) return;
-
-    Node * newNode = (Node *)malloc(sizeof(Node));
-    if (newNode == NULL) return;
-
-    newNode->data = data;
-
-    if (list->head == NULL || list->current == NULL) { 
-        newNode->next = NULL;
-        newNode->prev = NULL;
-        list->head = newNode;
-        list->tail = newNode;
-        list->current = newNode;
-        return;
-    }
-
-    if (list->current == list->head) { 
-        newNode->next = list->head;
-        newNode->prev = NULL;
-        list->head->prev = newNode;
-        list->head = newNode;
-        return;
-    }
-
-    newNode->next = list->current;
-    newNode->prev = list->current->prev;
-
-    if (list->current->prev != NULL) {
-        list->current->prev->next = newNode;
-    }
-
-    list->current->prev = newNode;
 }
 
 
