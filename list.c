@@ -66,30 +66,26 @@ void * prevList(List * list) {
 }
 
 void pushFront(List * list, void * data) {
-    if (list == NULL) return; // Verifica si la lista está inicializada
+    if (list == NULL) return;
 
-    // Crea un nuevo nodo
     Node * newNode = (Node *)malloc(sizeof(Node));
-    if (newNode == NULL) return; // Verifica si se asignó memoria correctamente
+    if (newNode == NULL) return;
 
-    newNode->data = data;
-    newNode->next = list->head; // El nuevo nodo apunta a la antigua cabeza
-    newNode->prev = NULL;       // Como es el primero, no tiene nodo anterior
+    newNode -> data = data;
+    newNode -> next = list -> head; 
+    newNode -> prev = NULL;
 
-    if (list->head != NULL) {
-        list->head->prev = newNode; // El antiguo primer nodo ahora apunta atrás al nuevo nodo
+    if (list -> head != NULL) {
+        list -> head -> prev = newNode;
     }
 
-    list->head = newNode; // La cabeza de la lista ahora es el nuevo nodo
-
-    if (list->tail == NULL) { // Si la lista estaba vacía, también actualiza tail
+    list->head = newNode; 
+    if (list -> tail == NULL) { 
         list->tail = newNode;
     }
 
-    // Si necesitas que current también apunte al primer nodo
-    list->current = list->head;
+    list -> current = list -> head;
 }
-
 
 void pushBack(List * list, void * data) {
     list->current = list->tail;
@@ -97,7 +93,37 @@ void pushBack(List * list, void * data) {
 }
 
 void pushCurrent(List * list, void * data) {
+    if (list == NULL || list->current == NULL) return; // Verifica si la lista está inicializada y si current es válido
+
+    Node * newNode = (Node *)malloc(sizeof(Node));
+    if (newNode == NULL) return; // Verifica si la asignación de memoria fue exitosa
+
+    newNode->data = data;
+
+    // Caso especial: si `current` está en `head`, es equivalente a `pushFront`
+    if (list->current == list->head) {
+        newNode->next = list->head;
+        newNode->prev = NULL;
+
+        if (list->head != NULL) {
+            list->head->prev = newNode;
+        }
+
+        list->head = newNode; // Actualiza la cabeza de la lista
+        return;
+    }
+
+    // Caso general: insertar antes de `current`
+    newNode->next = list->current;
+    newNode->prev = list->current->prev;
+
+    if (list->current->prev != NULL) {
+        list->current->prev->next = newNode;
+    }
+
+    list->current->prev = newNode;
 }
+
 
 
 void * popFront(List * list) {
