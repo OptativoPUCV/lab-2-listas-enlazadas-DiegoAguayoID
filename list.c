@@ -51,7 +51,7 @@ void * nextList(List * list) {
 }
 
 void * lastList(List * list) {
-    if (list == NULL || list -> tail == NULL)
+    if (list -> current == NULL || list -> tail == NULL)
         return NULL ;
     return list -> tail -> data ;
 }
