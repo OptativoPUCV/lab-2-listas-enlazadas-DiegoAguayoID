@@ -66,6 +66,14 @@ void * prevList(List * list) {
 }
 
 void pushFront(List * list, void * data) {
+    if (list -> current != NULL)
+    {
+        list -> current = list -> head ;
+    }
+    if (list -> current != NULL)
+    {
+        pushCurrent(list, data) ;
+    }
 }
 
 void pushBack(List * list, void * data) {
